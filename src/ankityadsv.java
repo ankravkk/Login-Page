@@ -23,8 +23,8 @@ public class ankityadsv extends JFrame {
 	private JPanel contentPane;
 	private JTextField user;
 	private JPasswordField password;
-	private JTextField textField;
-	private JTextField textField_1;
+	Connection con;
+	Statement stmt;
 
 	/**
 	 * Launch the application.
@@ -44,7 +44,7 @@ public class ankityadsv extends JFrame {
 
 	public ankityadsv() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 480, 331);
+		setBounds(100, 100, 282, 331);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -71,62 +71,53 @@ public class ankityadsv extends JFrame {
 		password = new JPasswordField();
 		password.setBounds(119, 138, 86, 20);
 		contentPane.add(password);
-		
+		try {
+			Class.forName("java.sql.Driver");
+			 con=DriverManager.getConnection("jdbc:mysql://localhost:3306/test","root","root");
+			 stmt=con.createStatement();
+		}catch(Exception e) {
+			
+		}
 		JButton btnNewButton = new JButton("Login");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					Class.forName("java.sql.Driver");
-					Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/test","root","root");
-					Statement stmt=con.createStatement();
+				
 					String sql="Select * from tblogin where username='"+user.getText()+"'and password='"+password.getText().toString()+"'";
 				ResultSet rs=stmt.executeQuery(sql);
 				if(rs.next())
 					JOptionPane.showMessageDialog(null, "Login Successfully.......");
 				else
 					JOptionPane.showMessageDialog(null, "Incorrect password or username.......");
- con.close();
+
 				}catch(Exception e) {System.out.print(e);}
 			}
 		});
 		btnNewButton.setBounds(10, 201, 111, 23);
 		contentPane.add(btnNewButton);
 		
-		JButton btnSignUp = new JButton("Sign up");
-		btnSignUp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					string query="insert into tblogin(username,password) values(?,?)";
-				}
-				catch(Exception e)
-				{
-					
-				}
-			}
-		});
-		btnSignUp.setBounds(298, 201, 105, 23);
-		contentPane.add(btnSignUp);
-		
 		JLabel lblNewUser = new JLabel("New User?");
-		lblNewUser.setBounds(311, 38, 76, 14);
+		lblNewUser.setBounds(149, 184, 64, 14);
 		contentPane.add(lblNewUser);
 		
-		JLabel lblName = new JLabel("Username");
-		lblName.setBounds(250, 80, 76, 14);
-		contentPane.add(lblName);
+		JButton btnNewButton_1 = new JButton("Sign Up");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					String sql="insert into tblogin values ('"+user.getText()+"','"+password.getText()+"')";
+				//	String sql="Select * from tblogin where username='"+user.getText()+"'and password='"+password.getText().toString()+"'";
+				int rs=stmt.executeUpdate(sql);
+				if(rs>0)
+					JOptionPane.showMessageDialog(null, "SignUP Successfully.......");
+				else
+					JOptionPane.showMessageDialog(null, "Incorrect password or username.......");
+
+				}catch(Exception e) {System.out.print(e);}
+			}
+			
+		});
+		btnNewButton_1.setBounds(149, 201, 76, 23);
+		contentPane.add(btnNewButton_1);
 		
-		textField = new JTextField();
-		textField.setBounds(326, 77, 99, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
-		
-		JLabel lblPassword_1 = new JLabel("Password");
-		lblPassword_1.setBounds(250, 127, 46, 14);
-		contentPane.add(lblPassword_1);
-		
-		textField_1 = new JTextField();
-		textField_1.setBounds(326, 124, 99, 20);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
 	}
 }
