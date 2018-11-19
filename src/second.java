@@ -8,12 +8,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
+import java.sql.*;
 
 public class second extends JFrame {
  
@@ -79,25 +79,14 @@ public class second extends JFrame {
 		contentPane.add(tf4);
 		tf4.setColumns(10);
 		JButton b1 = new JButton("Sign up");
-		Connection con;
-		java.sql.Statement stmt;
-		try {
-			Class.forName("java.sql.Driver");
-			 con=DriverManager.getConnection("jdbc:mysql://localhost:3306/test","root","root");
-			 stmt=con.createStatement();
-		}catch(Exception e) {
-			
-		}
+		
 		b1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-							try {
-				String sql="insert into tblogin values('"+tf4.getText()+"','"+tf5.getText()+"','"+tf1.getText()+"','"+tf2.getText()+"','"+tf3.getText()+"')";
-				//Statement stmt=con.createStatement();
-				int rs=stmt.executeUpdate(sql);
-				
-				}
-				catch(Exception e) {System.out.print(e);}
-				
+				try {
+			String sql="insert into tblogin values('"+tf4.getText()+"','"+tf5.getText()+"','"+tf1.getText()+"','"+tf2.getText()+"','"+tf3.getText()+"')";
+			Statement s=Connectivity.connectiondb();
+			int rs=s.executeUpdate(sql);
+				}catch(Exception e) {System.out.print(e);}
 			}
 		});
 		b1.setBounds(133, 430, 232, 23);
@@ -135,9 +124,12 @@ public class second extends JFrame {
 		tf6.setBounds(225, 320, 187, 20);
 		contentPane.add(tf6);
 	}
-
 	protected static Object executeUpdate(String query) {
-		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void NewScreen() {
+		// TODO Auto-generated method stub
+		
 	}
 }
