@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.util.Arrays;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 import java.sql.*;
@@ -79,18 +80,25 @@ public class second extends JFrame {
 		contentPane.add(tf4);
 		tf4.setColumns(10);
 		JButton b1 = new JButton("Sign up");
-		
+		b1.setVisible(true);
+		contentPane.add(b1);
+
 		b1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
+					if(Arrays.equals(tf5.getPassword(),tf6.getPassword()))
+					{
 			String sql="insert into tblogin values('"+tf4.getText()+"','"+tf5.getText()+"','"+tf1.getText()+"','"+tf2.getText()+"','"+tf3.getText()+"')";
 			Statement s=Connectivity.connectiondb();
 			int rs=s.executeUpdate(sql);
+			JOptionPane.showMessageDialog(null,"Sign Up Sucessfully....");}
+				else{
+						JOptionPane.showMessageDialog(null,"Password don't match");
+					}
 				}catch(Exception e) {System.out.print(e);}
-			}
-		});
+			
+			}});
 		b1.setBounds(133, 430, 232, 23);
-		contentPane.add(b1);
 		
 		JLabel lblName = new JLabel("Full Name");
 		lblName.setBounds(74, 89, 86, 14);
@@ -123,6 +131,8 @@ public class second extends JFrame {
 		tf6 = new JPasswordField();
 		tf6.setBounds(225, 320, 187, 20);
 		contentPane.add(tf6);
+		
+	
 	}
 	protected static Object executeUpdate(String query) {
 		return null;

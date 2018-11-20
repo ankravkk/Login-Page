@@ -16,16 +16,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class ankityadsv extends JFrame {
-
 	private JPanel contentPane;
 	private JTextField user;
 	private JPasswordField password;
-//	Connection con;
-	//Statement stmt;
-
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -49,7 +42,7 @@ public class ankityadsv extends JFrame {
 		
 		JLabel lblLoginPage = new JLabel("LOGIN PAGE");
 		lblLoginPage.setFont(new Font("Tahoma", Font.BOLD, 22));
-		lblLoginPage.setBounds(58, 26, 147, 29);
+		lblLoginPage.setBounds(60, 25, 147, 29);
 		contentPane.add(lblLoginPage);
 		
 		JLabel lblUsername = new JLabel("Username");
@@ -78,8 +71,7 @@ public class ankityadsv extends JFrame {
 				if(rs.next())
 					JOptionPane.showMessageDialog(null, "Login Successfully.......");
 				else
-					JOptionPane.showMessageDialog(null, "Incorrect password or username.......");
-
+					JOptionPane.showMessageDialog(null, "Incorrect Password or Username.......");
 				}catch(Exception e) {System.out.print(e);}
 				Connectivity.cclose();
 			}
@@ -100,6 +92,10 @@ public class ankityadsv extends JFrame {
 		});
 		btnSignUp.setBounds(124, 201, 89, 23);
 		contentPane.add(btnSignUp);
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setBounds(34, 267, 46, 14);
+		contentPane.add(lblNewLabel);
 		
 	}
 }
