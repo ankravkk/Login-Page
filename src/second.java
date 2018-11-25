@@ -8,9 +8,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.util.Arrays;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
@@ -84,19 +81,32 @@ public class second extends JFrame {
 		contentPane.add(b1);
 
 		b1.addActionListener(new ActionListener() {
+			Connection con;
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					if(Arrays.equals(tf5.getPassword(),tf6.getPassword()))
 					{
-			String sql="insert into tblogin values('"+tf4.getText()+"','"+tf5.getText()+"','"+tf1.getText()+"','"+tf2.getText()+"','"+tf3.getText()+"')";
-			Statement s=Connectivity.connectiondb();
-			int rs=s.executeUpdate(sql);
+						Class.forName("java.sql.Driver");
+						 con=DriverManager.getConnection("jdbc:mysql://localhost:3306/test","root","root");
+						PreparedStatement stmt=con.prepareStatement("insert into tblogin values(?,?,?,?,?)");
+						stmt.setString(1,tf4.getText());
+						stmt.setString(2,tf5.getText());
+						stmt.setString(3,tf1.getText());
+						stmt.setString(4,tf2.getText());
+						stmt.setString(5,tf3.getText());
+			int rs=stmt.executeUpdate();
 			JOptionPane.showMessageDialog(null,"Sign Up Sucessfully....");}
 				else{
 						JOptionPane.showMessageDialog(null,"Password don't match");
 					}
 				}catch(Exception e) {System.out.print(e);}
-			
+			try {
+				con.close();
+			}
+			catch(Exception e)
+			{
+				
+			}
 			}});
 		b1.setBounds(133, 430, 232, 23);
 		

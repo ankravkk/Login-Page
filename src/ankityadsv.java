@@ -63,17 +63,29 @@ public class ankityadsv extends JFrame {
 		contentPane.add(password);
 			JButton btnNewButton = new JButton("Login");
 		btnNewButton.addActionListener(new ActionListener() {
+		
+			Connection con;
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					String sql="Select * from tblogin where username='"+user.getText()+"'and password='"+password.getText().toString()+"'";
-						Statement s=Connectivity.connectiondb();
-					ResultSet rs=s.executeQuery(sql);
+					Class.forName("java.sql.Driver");
+					 con=DriverManager.getConnection("jdbc:mysql://localhost:3306/test","root","root");
+					PreparedStatement stmt=con.prepareStatement("Select * from tblogin where username= ? and password = ? ");
+					//String sql=;
+				//	PreparedStatement stmt=Connectivity.connectiondb(sql);
+					stmt.setString(1,user.getText());
+					stmt.setString(2,password.getText());
+					ResultSet rs=stmt.executeQuery();
 				if(rs.next())
 					JOptionPane.showMessageDialog(null, "Login Successfully.......");
 				else
 					JOptionPane.showMessageDialog(null, "Incorrect Password or Username.......");
 				}catch(Exception e) {System.out.print(e);}
-				Connectivity.cclose();
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		btnNewButton.setBounds(10, 201, 111, 23);
